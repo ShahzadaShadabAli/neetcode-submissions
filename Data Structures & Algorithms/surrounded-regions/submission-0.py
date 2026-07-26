@@ -1,0 +1,27 @@
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        ROW, COL = len(board), len(board[0])
+        visited = set()
+
+        def dfs(r, c):
+            if r not in range(ROW) or c not in range(COL) or (r, c) in visited or board[r][c] == "X":
+                return 
+            visited.add((r, c))
+            dfs(r+1, c)
+            dfs(r-1, c)
+            dfs(r, c+1)
+            dfs(r, c-1)
+
+        for r in range(ROW):
+            dfs(r, 0)
+            dfs(r, COL-1)
+
+        for c in range(COL):
+            dfs(0, c)
+            dfs(ROW-1, c)
+
+        for r in range(ROW):
+            for c in range(COL):
+                if (r, c) not in visited and board[r][c] == "O":
+                    board[r][c] = "X"
+        
